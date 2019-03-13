@@ -14,17 +14,18 @@ public class Employee2Manager {
 			do {
 				int exit = -1;
 				System.out.println();
-				System.out.println("********************EMPLOYEE MANAGEMENT********************");
-				System.out.println("1.\tADD EMPLOYEES");
-				System.out.println("2.\tVIEW EMPLOYEES");
-				System.out.println("3.\tSEARCH EMPLOYEES");
-				System.out.println("4.\tUPDATE EMPLOYEES");
-				System.out.println("5.\tDELETE EMPLOYEES");
-				System.out.println("6.\tSORT EMPLOYEES");
-				System.out.println("7.\tPRINT STATISTICS");
-				System.out.println("0.\tEXIT ");
+				System.out.println("-----------------------EMPLOYEE MANAGEMENT----------------------");
+				System.out.println("                       ___________________                      \n");
+				System.out.println("\t1.\t\tADD EMPLOYEES\n");
+				System.out.println("\t2.\t\tVIEW EMPLOYEES\n");
+				System.out.println("\t3.\t\tSEARCH EMPLOYEES\n");
+				System.out.println("\t4.\t\tUPDATE EMPLOYEES\n");
+				System.out.println("\t5.\t\tDELETE EMPLOYEES\n");
+				System.out.println("\t6.\t\tSORT EMPLOYEES\n");
+				System.out.println("\t7.\t\tPRINT STATISTICS\n");
+				System.out.println("\t0.\t\tEXIT\n ");
 
-				System.out.println("Enter option: ");
+				System.out.println("\tENTER OPTION: ");
 				input = service.acceptValidInteger();
 				if (input == -1)
 					return;
@@ -56,13 +57,13 @@ public class Employee2Manager {
 					service.printStatistics();
 					break;
 				default:
-					System.err.println("Invalid Selection");
+					System.err.println("INVALID SELECTION...!!!!");
 				}
 				if (exit == 1)
 					break;
 			} while (input != 0);
 		} catch (Exception e) {
-			System.out.println("Something went wrong");
+			System.out.println("SOMETHING WENT WRONG...!");
 			System.out.println(e.getMessage());
 		}
 

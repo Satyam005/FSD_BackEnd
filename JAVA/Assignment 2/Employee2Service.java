@@ -1,6 +1,7 @@
 package com.assignments2.core.java;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Employee2Service {
 
@@ -9,12 +10,12 @@ public class Employee2Service {
 	// Creating a HashMap for the employees
 	Map<Integer, Employee2<Integer>> employees = new HashMap<>();
 	
-	interface ValidateEmployee{
-		boolean check(Employee2<Integer> emp);
-	}
+//	interface ValidateEmployee{
+//		boolean check(Employee2<Integer> emp);
+//	}
 	
-	boolean validate(ValidateEmployee validator,Employee2<Integer> emp) {
-		return validator.check(emp);
+	boolean validate(Employee2<Integer> emp, Predicate<Employee2<Integer>> validator) {
+		return validator.test(emp);
 	}
 
 	// Custom comparator for sorting employee by name
@@ -104,21 +105,21 @@ public class Employee2Service {
 	// Method to add an employee
 	public void addEmp() {
 		try {
-			System.out.println("Enter Name:");
+			System.out.println("ENTER NAME:");
 			String name = sc.nextLine();
 
-			System.out.println("Enter Age:");
+			System.out.println("ENTER AGE: [Age Must be greater than 0 and less than 50]");
 			int age = acceptValidInteger();
 			if (age == -1)
 				return;
 
-			System.out.println("Enter Gender (Male/Female):");
+			System.out.println("ENTER GENDER (MALE/FEMALE):");
 			String gender = sc.nextLine();
 
-			System.out.println("Enter Department:");
+			System.out.println("ENTER DEPARTMENT:");
 			String dept = sc.nextLine();
 
-			System.out.println("Enter Salary:");
+			System.out.println("ENTER SALARY: [Salary must be greater than 10,000]");
 			int salary = acceptValidInteger();
 			if (salary == -1)
 				return;
@@ -126,16 +127,28 @@ public class Employee2Service {
 			// creating new employee object
 			Employee2<Integer> emp = new Employee2<>(name, age, gender, dept, salary);
 			
-			boolean isValidData = validate(emp1 -> (emp1.getAge()>0 && emp1.getAge()<=50) && emp1.getSalary()>=10000 && (emp1.getDepartment().equals("IT") || emp1.getDepartment().equals("Admin")), emp);
+			boolean isValidData = validate(emp, emp1 ->{ 
+				if((emp1.getAge()>0 && emp1.getAge()<=50) && emp1.getSalary()>=10000)
+				{
+					System.out.println("\nEMPLOYEE ADDED SUCCESSFULLY....\n");
+					return true;
+				}
+				else
+				{
+					System.out.println("\nUNABLE TO ADD EMPLOYEE....SPECIFIED CRITERIA FOR AGE or SALARY NOT MET\n");
+					return false;
+				}
+					
+			});
 
 			if(isValidData) {
 			// adding entry to the HashMap
 			employees.put(emp.getEmpID(), emp);
-			System.out.println("\nEmployee added successfully..");
+			//System.out.println("\nEmployee added successfully..");
 			}
-			else {
-				System.out.println("Unable to add Employee...Criteria not met");
-			}
+			/*
+			 * else { System.out.println("Unable to add Employee...Criteria not met"); }
+			 */
 		}
 			catch (Exception e) {
 			System.out.println("\nSomething went wrong..!!");
