@@ -8,6 +8,14 @@ public class Employee2Service {
 
 	// Creating a HashMap for the employees
 	Map<Integer, Employee2<Integer>> employees = new HashMap<>();
+	
+	interface ValidateEmployee{
+		boolean check(Employee2<Integer> emp);
+	}
+	
+	boolean validate(ValidateEmployee validator,Employee2<Integer> emp) {
+		return validator.check(emp);
+	}
 
 	// Custom comparator for sorting employee by name
 	Comparator EMP_BY_NAME = new Comparator() {
@@ -117,13 +125,19 @@ public class Employee2Service {
 
 			// creating new employee object
 			Employee2<Integer> emp = new Employee2<>(name, age, gender, dept, salary);
+			
+			boolean isValidData = validate(emp1 -> (emp1.getAge()>0 && emp1.getAge()<=50) && emp1.getSalary()>=10000 && (emp1.getDepartment().equals("IT") || emp1.getDepartment().equals("Admin")), emp);
 
+			if(isValidData) {
 			// adding entry to the HashMap
 			employees.put(emp.getEmpID(), emp);
-
 			System.out.println("\nEmployee added successfully..");
-
-		} catch (Exception e) {
+			}
+			else {
+				System.out.println("Unable to add Employee...Criteria not met");
+			}
+		}
+			catch (Exception e) {
 			System.out.println("\nSomething went wrong..!!");
 			System.out.println(e.getMessage());
 		}
